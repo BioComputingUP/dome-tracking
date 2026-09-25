@@ -1,0 +1,33 @@
+# DOME tracker — monitored resources. Hand-maintained.
+#   url                 the address checked for uptime
+#   repo                the GitHub repository (owner/name) whose code activity is tracked
+#   check.url           overrides url for the uptime check
+#   check.verify_tls    false skips TLS verification (use sparingly)
+resources:
+- id: dome-registry
+  name: DOME Registry
+  url: https://registry.dome-ml.org
+  repo: BioComputingUP/dome-registry
+  enabled: true
+- id: dome-ml
+  name: DOME-ML website
+  url: https://dome-ml.org
+  repo: BioComputingUP/dome-ml-ui
+  enabled: true
+- id: dome-copilot
+  name: DOME Copilot
+  url: https://dome-copilot.ifca.es/
+  repo: IFCA-Advanced-Computing/dome-copilot
+  enabled: true
+  # The server sends an incomplete TLS chain. check.py retries it unverified and records it as
+  # up with a tls_warning, which clears by itself once the chain is fixed, so verify_tls stays on.
+- id: osai
+  name: OSAI
+  url: https://osai.dome-ml.org
+  repo: BioComputingUP/dome-ml-osai-ui
+  enabled: true
+- id: dome-observatory
+  name: DOME Observatory
+  url: https://observatory.dome-ml.org
+  repo: BioComputingUP/dome-ml-observatory
+  enabled: true

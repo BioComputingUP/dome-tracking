@@ -1,0 +1,114 @@
+# DOME tracker: check every resource in tracker/resources.yml for uptime, and record the code
+# activity of each resource's GitHub repository, about once an hour, for ever.
+# Code comes from main (tracker/ only); results are committed to the `tracker-data` branch,
+# squashed to one commit per UTC day, so main's history is never touched by the tracker.
+# The branch is also the GitHub Pages source, so pushing to it republishes the dashboard.
+name: tracker-check
+
+on:
+  schedule:
+    # Four crons for an hourly target. GitHub's scheduler is best-effort and drops most ticks
+    # (a single hourly cron delivered only 5-7 runs a day on gavinf97/ECD), so extra ticks
+    # keep coverage near hourly. Extra runs are harmless: coverage is capped at 100%, and runs
+    # are free on a public repo. Odd minutes avoid the :00/:15/:30 rush.
+    - cron: "7 * * * *"
+    - cron: "23 * * * *"
+    - cron: "39 * * * *"
+    - cron: "51 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Runs never overlap. If a run is still going when another is triggered, GitHub keeps only the
+# newest pending one; that is fine, because every run is a full snapshot.
+concurrency:
+  group: tracker-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out tracker code (tracker/ only)
+        uses: actions/checkout@v4
+        with:
+          path: repo
+          sparse-checkout: tracker
+
+      - name: Check out data branch
+        uses: actions/checkout@v4
+        with:
+          ref: tracker-data
+          path: _data
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: repo/tracker/requirements.txt
+
+      - name: Install
+        run: pip install -r repo/tracker/requirements.txt
+
+      - name: Run uptime checks
+        run: python repo/tracker/scripts/check.py --config repo/tracker/resources.yml --data _data
+
+      - name: Record repository activity
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python repo/tracker/scripts/activity.py --config repo/tracker/resources.yml --data _data
+
+      - name: Summarise
+        run: python repo/tracker/scripts/summarize.py --config repo/tracker/resources.yml --data _data
+
+      - name: Publish the dashboard
+        run: |
+          cp repo/tracker/dashboard/index.html _data/index.html
+          touch _data/.nojekyll   # serve paths starting with _ and skip the Jekyll build
+
+      - name: Show the status in this run's summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          s = json.load(open("_data/summary.json"))
+          t, m = s["totals"], s["monitoring"]
+          print(f"## {'🔴' if m['stale'] else '🟢'} {s['resource_count']} resources checked\n")
+          print(f"🟢 up **{t['up']}** · 🟡 challenged **{t['challenged']}** · "
+                f"🔴 down **{t['down']}** · 🔗 URL review **{t['url_review']}**\n")
+          print(f"Run {m['runs_total']} · {m['runs_last_24h']} runs in the last 24 h · {s['generated']}\n")
+          print("[Dashboard](https://biocomputingup.github.io/dome-tracking/) · "
+                "[STATUS.md](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/STATUS.md)\n")
+          down = [r for r in s["resources"] if r["state"] == "down"]
+          if down:
+              print(f"<details><summary>{len(down)} down</summary>\n")
+              print("| Resource | Reason | Since |\n|---|---|---|")
+              for r in sorted(down, key=lambda r: r["name"].lower()):
+                  print(f"| {r['name']} | `{r['reason']}` | {r['since']} |")
+              print("\n</details>\n")
+          repos = s["activity"]["repos"]
+          if repos:
+              print("| Repository | Last push | Activity |\n|---|---|---|")
+              for rid, a in repos.items():
+                  print(f"| {a['repo']} | {a.get('pushed_at') or '—'} | {a.get('freshness')}"
+                        f"{' (API error)' if a.get('error') else ''} |")
+          PY
+
+      - name: Commit results (one commit per UTC day)
+        working-directory: _data
+        run: |
+          bot_email="41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "$bot_email"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          lease=$(git rev-parse HEAD)
+          subject="tracker data $(date -u +%F)"
+          if [ "$(git log -1 --format=%s)" = "$subject" ] && [ "$(git log -1 --format=%ae)" = "$bot_email" ]; then
+            git commit --amend --no-edit --quiet
+          else
+            git commit -m "$subject" --quiet
+          fi
+          git push --force-with-lease="tracker-data:$lease" origin HEAD:tracker-data
