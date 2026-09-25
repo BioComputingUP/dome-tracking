@@ -121,8 +121,11 @@ def collect(resources: list[dict], previous: dict, now: datetime,
         try:
             snap = {"repo": full_name, **fetcher(full_name), "error": None}
         except Exception as exc:  # noqa: BLE001 — never fail the run over one repo
-            log(f"activity: {full_name}: {exc}")
-            snap = {**(previous.get(res["id"]) or {"repo": full_name}), "error": str(exc)[:200]}
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            error = ("404: repository not found or private; the token cannot read it "
+                     "(set the ACTIVITY_TOKEN secret)" if status == 404 else str(exc)[:200])
+            log(f"activity: {full_name}: {error}")
+            snap = {**(previous.get(res["id"]) or {"repo": full_name}), "error": error}
         snap["fetched_at"] = iso(now)
         snap["freshness"] = classify_freshness(snap.get("pushed_at"), now)
         out[res["id"]] = snap

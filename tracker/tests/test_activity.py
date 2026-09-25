@@ -75,6 +75,19 @@ def test_error_keeps_previous_snapshot_and_never_raises(tmp_path):
     assert load_json(activity_path(tmp_path))["repos"]["alpha"]["error"]
 
 
+def test_404_says_the_token_cannot_read_the_repo():
+    import requests
+
+    def fetcher(name):
+        resp = requests.Response()
+        resp.status_code = 404
+        raise requests.HTTPError("404 Client Error", response=resp)
+
+    repos = collect(RESOURCES[:1], {}, NOW, fetcher=fetcher)
+    assert "ACTIVITY_TOKEN" in repos["alpha"]["error"]
+    assert repos["alpha"]["freshness"] == "unknown" and "pushed_at" not in repos["alpha"]
+
+
 def test_second_run_without_changes_appends_nothing(tmp_path):
     fetcher = lambda name: snap("2026-09-25T10:00:00Z", name)  # noqa: E731
     first = collect(RESOURCES, {}, NOW, fetcher=fetcher)

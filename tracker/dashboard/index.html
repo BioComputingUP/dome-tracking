@@ -275,8 +275,9 @@ function renderActivity(activity) {
     const repoUrl = s.html_url || "https://github.com/" + s.repo;
     return `<tr>
       <td class="name"><a href="${esc(repoUrl)}" rel="noopener">${esc(s.name || id)}</a>${s.error
-        ? `<span class="flag" title="${esc(s.error)}">API error · last known</span>` : ""}</td>
-      <td><span class="state f-${f}"><span class="dot"></span>${f} · ${ago(minsSince(s.pushed_at))}</span></td>
+        ? `<span class="flag" title="${esc(s.error)}">${s.pushed_at ? "API error · last known" : "no access"}</span>` : ""}</td>
+      <td>${s.pushed_at ? `<span class="state f-${f}"><span class="dot"></span>${f} · ${ago(minsSince(s.pushed_at))}</span>`
+        : `<span class="state f-unknown" title="${esc(s.error || "")}"><span class="dot"></span>no data</span>`}</td>
       <td class="node hide-sm"><a href="${esc(repoUrl)}" rel="noopener">${esc(s.repo)}</a>${s.default_branch ? ` <code>${esc(s.default_branch)}</code>` : ""}</td>
       <td class="commit">${sha ? `<a href="${esc(c.url)}" rel="noopener"><code>${esc(sha)}</code></a> ${esc(c.message)}
         <span class="node">— ${esc(c.author || "?")}, ${esc((c.date || "").slice(0, 10))}</span>` : "—"}</td>

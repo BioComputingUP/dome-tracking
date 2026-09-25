@@ -300,7 +300,8 @@ def render_activity(summary: dict) -> list[str]:
         repo_link = f"[{s['repo']}]({s.get('html_url') or 'https://github.com/' + s['repo']})"
         if s.get("default_branch"):
             repo_link += f" `{s['default_branch']}`"
-        err = " ⚠️ API error, showing last known" if s.get("error") else ""
+        err = ("" if not s.get("error") else " ⚠️ API error, showing last known" if s.get("pushed_at")
+               else f" ⚠️ {cell(s['error'])}")
         out.append(f"| {cell(s.get('name', rid))} | {repo_link} | "
                    f"{cell(s.get('pushed_at'))} ({ago(minutes_since(s.get('pushed_at'), now))}) | "
                    f"{FRESHNESS_ICON.get(s.get('freshness'), '⚪ unknown')}{err} | {commit} |")

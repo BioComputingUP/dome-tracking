@@ -90,6 +90,27 @@ for a week:
 
 ## 3. Common tasks
 
+**Give the tracker access to private repos.** The workflow's built-in `GITHUB_TOKEN` can read
+only this repository and public ones. `BioComputingUP/dome-ml-ui` and
+`BioComputingUP/dome-ml-osai-ui` are private, so until this is set up they show as
+**no access**. Their uptime checks are not affected.
+
+1. Go to GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.
+   - Set *Resource owner* to **BioComputingUP**.
+   - Under *Only select repositories*, choose `dome-ml-ui` and `dome-ml-osai-ui`.
+   - Set *Repository permissions* to **Contents: Read-only**. Metadata is added automatically.
+
+   An org owner may need to approve the token.
+2. Save it as a secret named `ACTIVITY_TOKEN`:
+   `gh secret set ACTIVITY_TOKEN -R BioComputingUP/dome-tracking`.
+   The next run picks it up. Public repos keep working through the same token.
+3. Set a reminder for when the token expires. After it expires, those two repos go back to
+   **no access**, and nothing else breaks.
+
+⚠️ This repository and its dashboard are **public**. Once the token is set, the latest commit
+message, author and date from the two private repos are published here too. If that is not
+acceptable, leave the secret unset.
+
 **Add or change a resource.** Edit [`resources.yml`](resources.yml). Each entry needs `id`,
 `name`, `url` and `repo`. Use `check.url` to check a different address than `url`, and
 `enabled: false` to pause an entry while keeping its history.
