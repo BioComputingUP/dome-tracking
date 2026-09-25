@@ -28,11 +28,14 @@ TRACKER_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG = TRACKER_ROOT / "resources.yml"
 
 USER_AGENT = "DOME-Tracker/0.1 (+https://github.com/BioComputingUP/dome-tracking)"
-# Target gap between checks; coverage is measured against it. The workflow schedules several
-# crons per hour because GitHub drops most scheduled ticks, so more than one run per interval
-# is normal and harmless: coverage is capped at 100%. Each daily file records the interval in
-# force that day, so changing it later does not distort past coverage.
-INTERVAL_MINUTES = 60
+# Target gap between checks; coverage is measured against it. Runs are triggered every 20 min
+# from outside GitHub (workflow_dispatch), with GitHub crons as a best-effort backup, so extra
+# runs are normal and harmless: coverage is capped at 100%. Each daily file records the
+# interval in force that day, so changing it later does not distort past coverage.
+INTERVAL_MINUTES = 20
+# No run for this long -> monitoring is reported as STALE (stopped), independent of the interval,
+# so a late run or two is not mistaken for a dead schedule.
+STALE_AFTER_MINUTES = 180
 # state.json keeps the timestamps of recent runs so every surface can show runs in the last 24 h.
 RECENT_RUNS_HOURS = 48
 RECENT_RUNS_MAX = 200

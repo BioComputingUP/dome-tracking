@@ -1,24 +1,31 @@
-# DOME tracker: check every resource in tracker/resources.yml for uptime, and record the code
-# activity of each resource's GitHub repository, about once an hour, for ever.
+# DOME tracker: check every resource in tracker/resources.yml for uptime every 20 minutes,
+# record the code activity of each resource's GitHub repository, and open/close an `outage`
+# issue when a resource goes down/comes back.
 # Code comes from main (tracker/ only); results are committed to the `tracker-data` branch,
 # squashed to one commit per UTC day, so main's history is never touched by the tracker.
 # The branch is also the GitHub Pages source, so pushing to it republishes the dashboard.
 name: tracker-check
 
 on:
+  # Primary trigger: an external cron (cron-job.org) calls workflow_dispatch at :05/:25/:45,
+  # because GitHub's own scheduler drops most ticks (tracker/README.md "Check interval").
+  # These crons are a best-effort backup if that trigger stops. Worst case is 3 + 4 = 7 runs an
+  # hour, under the GitHub Pages soft limit of 10 builds an hour.
   schedule:
-    # Four crons for an hourly target. GitHub's scheduler is best-effort and drops most ticks
-    # (a single hourly cron delivered only 5-7 runs a day on gavinf97/ECD), so extra ticks
-    # keep coverage near hourly. Extra runs are harmless: coverage is capped at 100%, and runs
-    # are free on a public repo. Odd minutes avoid the :00/:15/:30 rush.
     - cron: "7 * * * *"
     - cron: "23 * * * *"
     - cron: "39 * * * *"
     - cron: "51 * * * *"
   workflow_dispatch:
+    inputs:
+      simulate_down:
+        description: "Test the outage alerts: resource id to treat as down (data is not changed)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
+  issues: write
 
 # Runs never overlap. If a run is still going when another is triggered, GitHub keeps only the
 # newest pending one; that is fine, because every run is a full snapshot.
@@ -114,3 +121,13 @@ jobs:
             git commit -m "$subject" --quiet
           fi
           git push --force-with-lease="tracker-data:$lease" origin HEAD:tracker-data
+
+      # After the commit, so the results are saved even if the GitHub API fails here. It must use
+      # the built-in token: issues opened with your own token would not notify you.
+      - name: Open or close outage issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIMULATE_DOWN: ${{ inputs.simulate_down }}
+        run: |
+          python repo/tracker/scripts/notify.py --config repo/tracker/resources.yml --data _data \
+            ${SIMULATE_DOWN:+--simulate-down "$SIMULATE_DOWN"}

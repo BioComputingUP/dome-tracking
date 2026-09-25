@@ -3,6 +3,14 @@
 #   repo                the GitHub repository (owner/name) whose code activity is tracked
 #   check.url           overrides url for the uptime check
 #   check.verify_tls    false skips TLS verification (use sparingly)
+
+# Outage issues (scripts/notify.py): opened after this many failed runs in a row, closed when
+# the resource is back up. Mentioned and assigned users are emailed about both.
+notify:
+  mention: [gavinf97]
+  assign: [gavinf97]
+  min_consecutive_down: 2
+
 resources:
 - id: dome-registry
   name: DOME Registry

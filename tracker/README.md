@@ -40,6 +40,9 @@ The [`tracker-check`](../.github/workflows/tracker-check.yml) workflow runs thes
    The run never fails because of it.
 3. [`scripts/summarize.py`](scripts/summarize.py) rebuilds every report in §1.
 4. The workflow copies the dashboard to the data branch and commits.
+5. [`scripts/notify.py`](scripts/notify.py) opens or closes outage issues (see
+   [Outage alerts](#outage-alerts)). It runs after the commit, so the data is saved even if the
+   GitHub API fails at this step.
 
 ### Classification
 
@@ -58,35 +61,85 @@ sends the full chain.
 ### Metrics
 
 - **Uptime** = (up + challenged) ÷ recorded checks, over today, 7, 30, 90 and 365 days.
-- **Coverage** = recorded checks ÷ expected checks (one per hour since the resource was first
-  seen), capped at 100%. Missed runs lower coverage and are never counted as up.
-- **Runs in the last 24 h**: how many runs actually happened. The target is 24 or more. The
-  dashboard shows it green at 20 or more, amber at 10–19, and red below 10.
+- **Coverage** = recorded checks ÷ expected checks (one per 20 minutes since the resource was
+  first seen), capped at 100%. Missed runs lower coverage and are never counted as up. Days up
+  to 2026-09-25 are measured against the hourly interval in force then, because each daily file
+  records its own interval.
+- **Runs in the last 24 h**: how many runs actually happened, against a target of 72. It shows
+  green at 75% of the target or more (54+), amber at 33% or more (24+), and red below that.
+- **STALE**: no run for 3 hours. This is the "monitoring has stopped" signal. A late run or two
+  does not trigger it.
 - **Repository activity**: active if pushed within 7 days, recent within 30 days, quiet
   otherwise. The dashboard works this out against the viewer's clock.
 
 ### Check interval
 
-The target interval is **1 hour** (`INTERVAL_MINUTES` in [`scripts/common.py`](scripts/common.py)).
-The workflow schedules **four** crons an hour (:07, :23, :39, :51) because GitHub's scheduler is
-best-effort. On the ECD tracker, one hourly cron delivered only 5–7 runs a day, with gaps of
-2.5–6 hours. Every run succeeded and the repo is public, so this was scheduler throttling, not a
-cost limit. Extra runs do no harm: coverage is capped, and the job takes about a minute.
+The target interval is **20 minutes** (`INTERVAL_MINUTES` in [`scripts/common.py`](scripts/common.py)).
 
-**Escalation (not set up).** Use this if the "runs in the last 24 h" figure stays below about 18
-for a week:
+GitHub's own scheduler can't deliver that. It is best-effort and drops ticks under load: on the
+ECD tracker, an hourly cron fired only 5–7 times a day. So runs are triggered in two ways:
 
-1. Create a fine-grained personal access token. Scope it to this repository only, with the
-   permission *Actions: read and write*. The BioComputingUP organisation must allow fine-grained
-   tokens.
-2. Register a free external cron job, for example on cron-job.org, to run hourly:
-   ```
-   POST https://api.github.com/repos/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml/dispatches
-   Authorization: Bearer <token>
-   Accept: application/vnd.github+json
-   {"ref": "main"}
-   ```
-3. Set a calendar reminder for when the token expires.
+- **Primary:** a free [cron-job.org](https://cron-job.org) job calls the `workflow_dispatch` API
+  at :05, :25 and :45. Dispatch events run straight away and are not throttled.
+- **Backup:** four GitHub crons an hour (:07, :23, :39, :51), best-effort. They keep monitoring
+  going, roughly hourly, if the external trigger stops. For example, when its token expires.
+
+Extra runs do no harm. Coverage is capped at 100%, the concurrency group stops runs from
+overlapping, and the worst case of 7 runs an hour stays under the GitHub Pages limit of 10
+builds an hour.
+
+**One-time setup of the external trigger (about 10 minutes)**
+
+1. **Create a token.** Go to https://github.com/settings/personal-access-tokens/new and make a
+   fine-grained token.
+   - Resource owner: **BioComputingUP**.
+   - Repository access: *Only select repositories*, choosing `dome-tracking`.
+   - Repository permissions: **Actions: Read and write**. Nothing else.
+   - Expiration: 1 year, or the longest the org allows.
+   - An org owner may need to approve the token before it works.
+2. **Create the job.** Sign up at [cron-job.org](https://cron-job.org) (free) and create a cronjob.
+   - **URL:** `https://api.github.com/repos/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml/dispatches`
+   - **Schedule:** Custom. Every hour, every day, at minutes **5, 25 and 45**.
+   - **Advanced settings:**
+     - Request method: **POST**.
+     - Headers: `Authorization: Bearer <token>`, `Accept: application/vnd.github+json` and
+       `X-GitHub-Api-Version: 2022-11-28`.
+     - Request body: `{"ref":"main"}`.
+   - **Notifications:** turn on "notify me when execution fails". An expired or revoked token
+     then emails you.
+3. **Check it.** Press **Test run**; it should answer with a 2xx status. A new run then appears
+   under `gh run list -R BioComputingUP/dome-tracking --event workflow_dispatch`.
+4. **Set a reminder** for the token's expiry date. When it expires, runs fall back to the
+   backup crons, and "runs in the last 24 h" turns amber or red.
+
+The token can only trigger and manage Actions runs in this one repository. It lives only in
+cron-job.org, not in this repo.
+
+### Outage alerts
+
+[`scripts/notify.py`](scripts/notify.py) compares the current state with the open issues
+labelled `outage`, on every run:
+
+| Situation | Action |
+|---|---|
+| Down for `min_consecutive_down` runs in a row (2), with no open issue | Open **🔴 &lt;site&gt; is down**, @mention and assign the users in `notify:` in [`resources.yml`](resources.yml) |
+| Up or challenged again, with an open issue | Comment **🟢 back up** with the outage duration, and close the issue |
+| Still down, with an issue already open | Nothing, so there is no spam |
+
+Each issue carries a hidden marker naming the resource, so the script never opens a duplicate,
+and it catches up by itself if a run fails.
+
+Issues are opened by **github-actions[bot]** through the workflow's built-in token. That is
+deliberate: GitHub does not notify you about actions taken with your own token. Being mentioned
+and assigned makes you a participant, so you are emailed about the opening, the "back up" comment
+and the close, whatever your watch settings are. The only setting needed is email for
+"Participating" notifications at https://github.com/settings/notifications, which is on by
+default.
+
+**Test the alerts.** Run
+`gh workflow run tracker-check.yml -R BioComputingUP/dome-tracking -f simulate_down=dome-registry`.
+- This opens a **[test] 🔴 DOME Registry is down** issue. Recorded data is not changed.
+- The next run sees the site up, comments "back up" and closes the issue.
 
 ## 3. Common tasks
 
@@ -135,6 +188,7 @@ cp tracker/dashboard/index.html $D/ && python -m http.server -d $D 8000
 
 - **One vantage point.** Checks run from GitHub-hosted runners, mostly in US Azure regions.
 - **Homepage only.** Each resource gets one URL check. APIs and search are not tested.
-- **Hourly sampling.** Outages shorter than an hour can be missed.
+- **20-minute sampling.** Outages shorter than about 20 minutes can be missed. Because an alert
+  needs two failed runs in a row, it arrives 20–40 minutes after a site goes down.
 - **"Activity" means code pushes.** Issues, pull requests and releases are not counted.
   `pushed_at` covers every branch, and the head commit covers only the default branch.

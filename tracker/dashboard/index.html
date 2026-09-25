@@ -343,16 +343,19 @@ function boot(summary, history) {
     : m.interval_minutes === 60 ? "every hour" : `every ${m.interval_minutes / 60} h`;
 
   const ageMin = minsSince(m.last_run);
-  const stale = m.stale || ageMin === null || ageMin > m.interval_minutes * 3;
+  const staleAfter = m.stale_after_minutes || m.interval_minutes * 3;
+  const stale = m.stale || ageMin === null || ageMin > staleAfter;
   const runs24 = (m.recent_runs || []).filter((ts) => Date.now() - Date.parse(ts) < 86400000).length;
-  const cadence = runs24 >= 20 ? "active" : runs24 >= 10 ? "recent" : "quiet";
+  const expected24 = m.expected_runs_24h || Math.floor(1440 / m.interval_minutes);
+  const share = runs24 / Math.max(expected24, 1);
+  const cadence = share >= 0.75 ? "active" : share >= 0.33 ? "recent" : "quiet";
 
   $("#health").className = "pill " + (stale ? "stale" : "live");
   $("#health-text").textContent = stale ? "Monitoring STALE" : "Monitoring active";
   $("#meta").innerHTML = [
     `Last check <b>${esc(m.last_run || "—")}</b> (${ago(ageMin)})`,
-    `<span class="state f-${cadence}" title="Target: at least 24 a day. GitHub drops some scheduled runs.">`
-      + `<span class="dot"></span><b>${runs24}</b>&nbsp;runs in the last 24 h</span>`,
+    `<span class="state f-${cadence}" title="Green at 75% of the target or more, amber at 33%, red below.">`
+      + `<span class="dot"></span><b>${runs24}</b>&nbsp;of ${expected24} runs in the last 24 h</span>`,
     `Target: <b>${every}</b>`,
     `<b>${m.runs_total}</b> runs recorded`,
     `<a href="${esc(m.workflow_url)}">Workflow runs ↗</a>`,
@@ -360,9 +363,9 @@ function boot(summary, history) {
 
   if (stale) {
     $("#banner").innerHTML = `<div class="banner"><b>Monitoring has stopped.</b> The last check was
-      ${ago(ageMin)}. GitHub disables scheduled workflows in repositories with 60 days
-      of no activity — re-enable <a href="${esc(m.workflow_url)}">tracker-check</a> in the Actions tab.
-      Figures below are as of the last successful run.</div>`;
+      ${ago(ageMin)}. Check the cron-job.org job and its token, and whether
+      <a href="${esc(m.workflow_url)}">tracker-check</a> is still enabled in the Actions tab (GitHub disables
+      schedules after 60 days of no activity). Figures below are as of the last successful run.</div>`;
   }
 
   const repos = Object.values((summary.activity && summary.activity.repos) || {});

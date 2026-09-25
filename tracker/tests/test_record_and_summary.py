@@ -5,7 +5,7 @@ import pytest
 import check
 from check import record
 from common import activity_path, daily_path, events_path, load_json, state_path, write_json
-from summarize import (build_badges, build_history, build_summary, expected_checks,
+from summarize import (build_badges, build_history, build_summary, cadence, expected_checks,
                        read_recent_events, render_branch_readme, render_status)
 
 T0 = datetime(2026, 9, 10, 0, 0, tzinfo=timezone.utc)
@@ -106,15 +106,17 @@ def test_unchecked_resource_is_unknown(tmp_path):
     assert all(r["windows"]["30d"]["uptime"] is None for r in summary["resources"])
 
 
-def test_monitoring_goes_stale_after_three_missed_intervals(tmp_path):
+def test_monitoring_goes_stale_after_three_hours_without_a_run(tmp_path):
     run(tmp_path, T0)
 
     fresh = build_summary(RESOURCES, tmp_path, T0 + timedelta(minutes=30))["monitoring"]
     assert fresh["status"] == "ACTIVE" and fresh["stale"] is False
     assert fresh["runs_total"] == 1
 
-    # INTERVAL_MINUTES is 60 in summarize (check.py's is patched to 5 for these fixtures),
-    # so staleness starts after 3 hours without a run.
+    # A late run or two is not a dead schedule: still ACTIVE well past 3 intervals of 20 min.
+    late_but_alive = build_summary(RESOURCES, tmp_path, T0 + timedelta(minutes=170))["monitoring"]
+    assert late_but_alive["status"] == "ACTIVE" and late_but_alive["stale_after_minutes"] == 180
+
     late = build_summary(RESOURCES, tmp_path, T0 + timedelta(hours=4))["monitoring"]
     assert late["status"] == "STALE" and late["minutes_since_last_run"] == 240
 
@@ -144,7 +146,7 @@ def test_badges_report_counts_and_staleness(tmp_path):
     run(tmp_path, T0, beta="down", beta_code=502)
 
     live = build_badges(build_summary(RESOURCES, tmp_path, T0 + timedelta(minutes=5)))
-    assert live["monitoring"]["message"] == "active · hourly"
+    assert live["monitoring"]["message"] == "active · every 20 min"
     assert live["monitoring"]["color"] == "brightgreen"
     assert live["down"]["message"] == "1" and live["down"]["color"] == "red"
     assert live["up"]["message"] == "1/2"   # labelled "responding": up + challenged
@@ -199,9 +201,18 @@ def test_recent_runs_are_kept_for_48h_and_counted_over_24h(tmp_path):
     assert state["recent_runs"][-1] == "2026-09-12T22:00:00Z"
 
     m = build_summary(RESOURCES, tmp_path, now)["monitoring"]
-    assert m["runs_last_24h"] == 12
-    assert build_badges(build_summary(RESOURCES, tmp_path, now))["runs-24h"]["color"] == "yellow"
-    assert "| **Runs in the last 24 h** | 12" in render_status(build_summary(RESOURCES, tmp_path, now), [])
+    assert m["runs_last_24h"] == 12 and m["expected_runs_24h"] == 72
+    badge = build_badges(build_summary(RESOURCES, tmp_path, now))["runs-24h"]
+    assert badge["message"] == "12/72" and badge["color"] == "red"      # 17% of target
+    assert "| **Runs in the last 24 h** | 12 of a target 72" in render_status(build_summary(RESOURCES, tmp_path, now), [])
+
+
+def test_cadence_is_judged_against_the_target():
+    m = {"expected_runs_24h": 72}
+    assert cadence({**m, "runs_last_24h": 54}) == "good"
+    assert cadence({**m, "runs_last_24h": 53}) == "low"
+    assert cadence({**m, "runs_last_24h": 24}) == "low"
+    assert cadence({**m, "runs_last_24h": 23}) == "poor"
 
 
 def test_repo_activity_flows_into_summary_status_and_badge(tmp_path):

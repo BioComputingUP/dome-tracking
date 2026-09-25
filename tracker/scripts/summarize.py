@@ -35,15 +35,14 @@ from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (DEFAULT_CONFIG, INTERVAL_MINUTES, N_BUCKETS, activity_path,  # noqa: E402
-                    daily_path, daterange, effective_url, events_path, hist_percentile, iso,
-                    load_json, load_resources, log, parse_iso, runs_within, state_path, utcnow,
-                    write_json)
+from common import (DEFAULT_CONFIG, INTERVAL_MINUTES, N_BUCKETS,  # noqa: E402
+                    STALE_AFTER_MINUTES, activity_path, daily_path, daterange, effective_url,
+                    events_path, hist_percentile, iso, load_json, load_resources, log, parse_iso,
+                    runs_within, state_path, utcnow, write_json)
 
 WINDOWS = [("today", 1), ("7d", 7), ("30d", 30), ("90d", 90), ("365d", 365)]
 HISTORY_DAYS = 90
 TARGET = 0.99                 # reference line; sorts the "below target" list only
-STALE_AFTER_INTERVALS = 3     # no run for this many intervals -> monitoring reported as stale
 RECENT_EVENTS = 25
 
 REPO = "BioComputingUP/dome-tracking"
@@ -108,15 +107,17 @@ def monitoring_health(state: dict, now: datetime) -> dict:
     since_min = None
     if last_run:
         since_min = round((now - parse_iso(last_run)).total_seconds() / 60)
-    stale = since_min is None or since_min > INTERVAL_MINUTES * STALE_AFTER_INTERVALS
+    stale = since_min is None or since_min > STALE_AFTER_MINUTES
     recent_runs = state.get("recent_runs", [])
     return {
         "last_run": last_run,
         "minutes_since_last_run": since_min,
         "runs_total": state.get("runs_total", 0),
         "runs_last_24h": runs_within(recent_runs, now, 24),
+        "expected_runs_24h": 1440 // INTERVAL_MINUTES,
         "recent_runs": recent_runs,
         "interval_minutes": INTERVAL_MINUTES,
+        "stale_after_minutes": STALE_AFTER_MINUTES,
         "stale": stale,
         "status": "STALE" if stale else "ACTIVE",
         "workflow_url": ACTIONS_URL,
@@ -233,11 +234,16 @@ def build_badges(summary: dict) -> dict[str, dict]:
                             "brightgreen" if not t["url_review"] else "orange"),
         "last-check": badge("last check", (m["last_run"] or "never").replace("T", " ").replace("Z", " UTC"),
                             "brightgreen" if not m["stale"] else "red"),
-        "runs-24h": badge("runs in last 24h", str(m["runs_last_24h"]),
-                          "brightgreen" if m["runs_last_24h"] >= 20
-                          else "yellow" if m["runs_last_24h"] >= 10 else "red"),
+        "runs-24h": badge("runs in last 24h", f"{m['runs_last_24h']}/{m['expected_runs_24h']}",
+                          {"good": "brightgreen", "low": "yellow", "poor": "red"}[cadence(m)]),
         "activity": activity_badge(summary["activity"]["repos"]),
     }
+
+
+def cadence(m: dict) -> str:
+    """How well runs are being delivered: good (≥75% of target), low (≥33%) or poor."""
+    share = m["runs_last_24h"] / max(m["expected_runs_24h"], 1)
+    return "good" if share >= 0.75 else "low" if share >= 0.33 else "poor"
 
 
 def activity_badge(repos: dict) -> dict:
@@ -328,7 +334,7 @@ def render_status(summary: dict, events: list[dict]) -> str:
         f"| | |", "|---|---|",
         f"| **Resources monitored** | {summary['resource_count']} — every one, every {every}, continuously |",
         f"| **Last check** | {m['last_run'] or '—'} ({ago(m['minutes_since_last_run'])}) |",
-        f"| **Runs in the last 24 h** | {m['runs_last_24h']} (target ≥ 24; GitHub drops some scheduled runs) |",
+        f"| **Runs in the last 24 h** | {m['runs_last_24h']} of a target {m['expected_runs_24h']} |",
         f"| **Checks recorded** | {m['runs_total']} runs since monitoring began |",
         f"| **Runs on** | [GitHub Actions → tracker-check]({ACTIONS_URL}) |",
         f"| **Visual dashboard** | {DASHBOARD_URL} |",
@@ -336,9 +342,10 @@ def render_status(summary: dict, events: list[dict]) -> str:
     ]
     if m["stale"]:
         out += [f"> The last check was {ago(m['minutes_since_last_run'])}, more than "
-                f"{STALE_AFTER_INTERVALS}× the {every} interval. The scheduled workflow has probably "
-                f"stopped — GitHub disables schedules in repositories with 60 days of no activity. "
-                f"Re-enable it at [Actions → tracker-check]({ACTIONS_URL}).", ""]
+                f"{m['stale_after_minutes'] // 60} hours ago. Both the external trigger and the GitHub "
+                f"schedule have probably stopped: check the cron-job.org job and its token, and "
+                f"re-enable the workflow at [Actions → tracker-check]({ACTIONS_URL}) (GitHub disables "
+                f"schedules after 60 days of no repository activity).", ""]
 
     out += [
         f"### Right now",
