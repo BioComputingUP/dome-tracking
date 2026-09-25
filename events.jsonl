@@ -1,0 +1,5 @@
+{"ts": "2026-09-25T17:13:05Z", "id": "dome-registry", "event": "state_change", "from": null, "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-25T17:13:05Z", "id": "dome-ml", "event": "state_change", "from": null, "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-25T17:13:05Z", "id": "dome-copilot", "event": "state_change", "from": null, "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-25T17:13:05Z", "id": "osai", "event": "state_change", "from": null, "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-25T17:13:05Z", "id": "dome-observatory", "event": "state_change", "from": null, "to": "up", "code": 403, "reason": "http_403", "error": null}

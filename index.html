@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOME Tracker</title>
+<meta name="description" content="Uptime and repository activity of the DOME ecosystem: DOME Registry, DOME-ML, DOME Copilot, OSAI and DOME Observatory.">
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1: #fcfcfb;
+    --page: #f9f9f7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    /* Status palette — fixed, never themed. Always shipped with an icon + label. */
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --nodata: #c9c8c1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1: #1a1a19;
+      --page: #0d0d0d;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --grid: #2c2c2a;
+      --nodata: #3a3a37;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1: #1a1a19;
+    --page: #0d0d0d;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --nodata: #3a3a37;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font: 15px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 16px 64px; }
+  a { color: inherit; }
+  h1 { font-size: 1.5rem; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .sub { color: var(--text-secondary); font-size: 0.875rem; margin: 6px 0 0; }
+
+  header { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: space-between; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px;
+    font-size: 0.8125rem; font-weight: 600; border: 1px solid var(--grid); background: var(--surface-1);
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .live .dot { background: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
+  .stale .dot { background: var(--critical); box-shadow: 0 0 0 3px color-mix(in srgb, var(--critical) 22%, transparent); }
+
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 20px; color: var(--text-secondary); font-size: 0.8125rem; margin-top: 14px; }
+  .meta b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 24px 0; }
+  .tile { background: var(--surface-1); border: 1px solid var(--grid); border-radius: 12px; padding: 16px 18px; }
+  .tile .n { font-size: 2rem; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .tile .l { display: flex; align-items: center; gap: 7px; font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; }
+  .tile .l .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+  .panel { background: var(--surface-1); border: 1px solid var(--grid); border-radius: 12px; padding: 18px 18px 6px; margin-bottom: 22px; }
+  .panel.empty { padding-bottom: 18px; }
+  .note { color: var(--text-secondary); font-size: 0.8125rem; margin: -4px 0 14px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  input[type="search"], select {
+    font: inherit; font-size: 0.875rem; padding: 8px 11px; border-radius: 8px;
+    border: 1px solid var(--grid); background: var(--surface-1); color: var(--text-primary);
+  }
+  input[type="search"] { flex: 1 1 220px; min-width: 0; }
+  input:focus-visible, select:focus-visible, button:focus-visible, th:focus-visible {
+    outline: 2px solid var(--text-primary); outline-offset: 1px;
+  }
+
+  .tscroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+  th {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
+    font-weight: 600; white-space: nowrap; position: sticky; top: 0; background: var(--surface-1); z-index: 1;
+  }
+  th[data-sort] { cursor: pointer; user-select: none; }
+  th[data-sort]:hover { color: var(--text-primary); }
+  th .arrow { opacity: 0.35; }
+  th[aria-sort] .arrow { opacity: 1; }
+  tbody tr:hover { background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.name { font-weight: 500; }
+  td.name a { text-decoration: none; }
+  td.name a:hover { text-decoration: underline; }
+  .node { color: var(--text-secondary); font-size: 0.8125rem; white-space: nowrap; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8125rem; color: var(--text-secondary); }
+
+  /* State label: dot + word. Colour never carries the meaning on its own. */
+  .state { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; font-size: 0.8125rem; }
+  .state .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .s-up .dot { background: var(--good); }
+  .s-challenged .dot { background: var(--warning); }
+  .s-down .dot { background: var(--critical); }
+  .s-unknown .dot { background: var(--nodata); }
+  /* Repository freshness and run cadence reuse the same dot + word pattern. */
+  .f-active .dot { background: var(--good); }
+  .f-recent .dot { background: var(--warning); }
+  .f-quiet .dot { background: var(--critical); }
+  .f-unknown .dot { background: var(--nodata); }
+  .meta .state { font-size: inherit; gap: 6px; }
+  td.commit { min-width: 220px; }
+
+  .flag {
+    display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 5px; font-size: 0.6875rem;
+    font-weight: 600; border: 1px solid var(--serious); color: var(--text-primary);
+    background: color-mix(in srgb, var(--serious) 18%, transparent);
+  }
+
+  /* 90-day strip: one 4px-wide bar per day, 2px surface gap between bars. */
+  .strip { display: flex; gap: 2px; align-items: flex-end; height: 22px; }
+  .strip i { width: 4px; height: 100%; border-radius: 2px; background: var(--nodata); flex: none; }
+  .strip i.ok { background: var(--good); }
+  .strip i.warn { background: var(--warning); }
+  .strip i.bad { background: var(--critical); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.75rem; color: var(--text-secondary); padding: 12px 0 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+  #tip {
+    position: fixed; z-index: 50; pointer-events: none; opacity: 0; transition: opacity 0.1s;
+    background: var(--text-primary); color: var(--surface-1); font-size: 0.75rem; line-height: 1.45;
+    padding: 6px 9px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+
+  footer { color: var(--text-secondary); font-size: 0.8125rem; margin-top: 28px; }
+  .banner {
+    border: 1px solid var(--critical); background: color-mix(in srgb, var(--critical) 12%, transparent);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 22px; font-size: 0.875rem;
+  }
+  button.ghost {
+    font: inherit; font-size: 0.8125rem; padding: 7px 11px; border-radius: 8px; cursor: pointer;
+    border: 1px solid var(--grid); background: var(--surface-1); color: var(--text-secondary);
+  }
+  @media (max-width: 720px) {
+    .hide-sm { display: none; }
+    .wrap { padding-top: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>DOME Tracker</h1>
+      <p class="sub">Uptime of the DOME ecosystem’s web resources, and code activity in their
+        GitHub repositories.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="health" class="pill live"><span class="dot"></span><span id="health-text">loading…</span></span>
+      <button class="ghost" id="theme" title="Toggle light / dark" aria-label="Toggle light / dark">Theme</button>
+    </div>
+  </header>
+
+  <div class="meta" id="meta"></div>
+  <div id="banner"></div>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="panel" id="attention-panel" hidden>
+    <h2>Needs attention</h2>
+    <p class="note" id="attention-note"></p>
+    <div class="tscroll"><table>
+      <thead><tr>
+        <th>Resource</th><th>State</th>
+        <th>Reason</th><th class="hide-sm">Since (UTC)</th><th class="num">30d</th>
+      </tr></thead>
+      <tbody id="attention"></tbody>
+    </table></div>
+  </div>
+
+  <div class="panel" id="activity-panel" hidden>
+    <h2>Repository activity</h2>
+    <p class="note">Last push to any branch, and the latest commit on the default branch.
+      Active = pushed within 7 days · recent = within 30 days · quiet = longer.</p>
+    <div class="tscroll"><table>
+      <thead><tr>
+        <th>Resource</th><th>Last push</th><th class="hide-sm">Repository</th><th>Latest commit</th>
+      </tr></thead>
+      <tbody id="activity"></tbody>
+    </table></div>
+    <p class="note" style="margin:14px 0 12px">Full timeline:
+      <a href="activity_history.jsonl">activity_history.jsonl</a>, one line per new push.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Uptime</h2>
+    <div class="controls">
+      <input type="search" id="q" placeholder="Search resources…" aria-label="Search resources">
+      <select id="f-state" aria-label="Filter by state"><option value="">All states</option></select>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--good)"></i> 100% up that day</span>
+      <span><i style="background:var(--warning)"></i> partial (≥50%)</span>
+      <span><i style="background:var(--critical)"></i> mostly down (&lt;50%)</span>
+      <span><i style="background:var(--nodata)"></i> no data recorded</span>
+      <span style="color:var(--text-muted)">— hover any bar for that day’s figures</span>
+    </div>
+    <div class="tscroll"><table>
+      <thead><tr>
+        <th data-sort="name">Resource <span class="arrow">↕</span></th>
+        <th data-sort="state">State <span class="arrow">↕</span></th>
+        <th class="hide-sm">Last 30 days</th>
+        <th data-sort="d1" class="num">Today <span class="arrow">↕</span></th>
+        <th data-sort="d7" class="num">7d <span class="arrow">↕</span></th>
+        <th data-sort="d30" class="num">30d <span class="arrow">↕</span></th>
+        <th data-sort="p95" class="num hide-sm">p95 <span class="arrow">↕</span></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="note" id="count" style="margin:14px 0 12px"></p>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const tip = $("#tip");
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (x) => x === null || x === undefined ? "—" : (x * 100).toFixed(2) + "%";
+const STATES = { up: "up", challenged: "challenged", down: "down", unknown: "never checked" };
+const REPO_URL = "https://github.com/BioComputingUP/dome-tracking";
+
+let SUMMARY = null, HISTORY = null, sortKey = "name", sortDir = 1;
+
+function ago(min) {
+  if (min === null || min === undefined) return "never";
+  if (min < 60) return min + " min ago";
+  if (min < 2880) return Math.floor(min / 60) + " h ago";
+  return Math.floor(min / 1440) + " days ago";
+}
+
+// Ages are measured against the viewer's clock, not the time summary.json was written,
+// so a tracker that has stopped running shows as STALE even though no run says so.
+const minsSince = (ts) => ts ? Math.max(0, Math.round((Date.now() - Date.parse(ts)) / 60000)) : null;
+
+function freshness(pushedAt) {
+  if (!pushedAt) return "unknown";
+  const days = (Date.now() - Date.parse(pushedAt)) / 86400000;
+  return days < 7 ? "active" : days < 30 ? "recent" : "quiet";
+}
+
+function renderActivity(activity) {
+  const repos = Object.entries((activity && activity.repos) || {});
+  if (!repos.length) return;
+  $("#activity-panel").hidden = false;
+  $("#activity").innerHTML = repos.map(([id, s]) => {
+    const f = freshness(s.pushed_at), c = s.last_commit || {};
+    const sha = (c.sha || "").slice(0, 7);
+    const repoUrl = s.html_url || "https://github.com/" + s.repo;
+    return `<tr>
+      <td class="name"><a href="${esc(repoUrl)}" rel="noopener">${esc(s.name || id)}</a>${s.error
+        ? `<span class="flag" title="${esc(s.error)}">${s.pushed_at ? "API error · last known" : "no access"}</span>` : ""}</td>
+      <td>${s.pushed_at ? `<span class="state f-${f}"><span class="dot"></span>${f} · ${ago(minsSince(s.pushed_at))}</span>`
+        : `<span class="state f-unknown" title="${esc(s.error || "")}"><span class="dot"></span>no data</span>`}</td>
+      <td class="node hide-sm"><a href="${esc(repoUrl)}" rel="noopener">${esc(s.repo)}</a>${s.default_branch ? ` <code>${esc(s.default_branch)}</code>` : ""}</td>
+      <td class="commit">${sha ? `<a href="${esc(c.url)}" rel="noopener"><code>${esc(sha)}</code></a> ${esc(c.message)}
+        <span class="node">— ${esc(c.author || "?")}, ${esc((c.date || "").slice(0, 10))}</span>` : "—"}</td>
+    </tr>`;
+  }).join("");
+}
+
+function stateCell(r) {
+  return `<span class="state s-${esc(r.state)}"><span class="dot"></span>${STATES[r.state] || esc(r.state)}</span>`;
+}
+
+const STRIP_DAYS = 30;  // the strip shows the most recent STRIP_DAYS; history.json holds 90
+
+function stripHTML(id) {
+  const h = HISTORY && HISTORY.resources[id];
+  if (!h) return "";
+  const from = Math.max(0, h.uptime.length - STRIP_DAYS);
+  const start = new Date(HISTORY.start + "T00:00:00Z");
+  const bars = h.uptime.slice(from).map((u, j) => {
+    const i = from + j;
+    const d = new Date(start.getTime() + i * 86400000).toISOString().slice(0, 10);
+    const n = h.checks[i];
+    const cls = u === null ? "" : u >= 99.999 ? "ok" : u >= 50 ? "warn" : "bad";
+    const label = u === null ? "no data" : u.toFixed(1) + "% up · " + n + (n === 1 ? " check" : " checks");
+    return `<i class="${cls}" data-t="${d} — ${label}"></i>`;
+  }).join("");
+  return `<div class="strip" role="img" aria-label="Daily uptime, last ${Math.min(STRIP_DAYS, h.uptime.length)} days">${bars}</div>`;
+}
+
+function render() {
+  const q = $("#q").value.trim().toLowerCase();
+  const fs = $("#f-state").value;
+
+  let rows = SUMMARY.resources.filter((r) =>
+    (!fs || r.state === fs) &&
+    (!q || [r.name, r.id, r.url, r.repo].some((v) => (v || "").toLowerCase().includes(q))));
+
+  const key = (r) => ({
+    name: r.name.toLowerCase(),
+    state: ["down", "challenged", "unknown", "up"].indexOf(r.state),
+    d1: r.windows.today.uptime ?? -1, d7: r.windows["7d"].uptime ?? -1,
+    d30: r.windows["30d"].uptime ?? -1, p95: r.latency_30d.mean_ms ?? -1,
+  }[sortKey]);
+  rows.sort((a, b) => { const x = key(a), y = key(b); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
+
+  $("#rows").innerHTML = rows.map((r) => `<tr>
+    <td class="name"><a href="${esc(r.url)}" rel="noopener">${esc(r.name)}</a>${r.url_review ? '<span class="flag">check URL</span>' : ""}${r.tls_warning
+      ? `<span class="flag" title="${esc(r.tls_warning)}">TLS chain</span>` : ""}</td>
+    <td>${stateCell(r)}</td>
+    <td class="hide-sm">${stripHTML(r.id)}</td>
+    <td class="num">${pct(r.windows.today.uptime)}</td>
+    <td class="num">${pct(r.windows["7d"].uptime)}</td>
+    <td class="num">${pct(r.windows["30d"].uptime)}</td>
+    <td class="num hide-sm">${esc(r.latency_30d.p95 || "—")}</td>
+  </tr>`).join("");
+  $("#count").textContent = `Showing ${rows.length} of ${SUMMARY.resources.length} monitored resources.`;
+}
+
+function boot(summary, history) {
+  SUMMARY = summary; HISTORY = history;
+  const t = summary.totals, m = summary.monitoring;
+  const every = m.interval_minutes < 60 ? `every ${m.interval_minutes} min`
+    : m.interval_minutes === 60 ? "every hour" : `every ${m.interval_minutes / 60} h`;
+
+  const ageMin = minsSince(m.last_run);
+  const staleAfter = m.stale_after_minutes || m.interval_minutes * 3;
+  const stale = m.stale || ageMin === null || ageMin > staleAfter;
+  const runs24 = (m.recent_runs || []).filter((ts) => Date.now() - Date.parse(ts) < 86400000).length;
+  const expected24 = m.expected_runs_24h || Math.floor(1440 / m.interval_minutes);
+  const share = runs24 / Math.max(expected24, 1);
+  const cadence = share >= 0.75 ? "active" : share >= 0.33 ? "recent" : "quiet";
+
+  $("#health").className = "pill " + (stale ? "stale" : "live");
+  $("#health-text").textContent = stale ? "Monitoring STALE" : "Monitoring active";
+  $("#meta").innerHTML = [
+    `Last check <b>${esc(m.last_run || "—")}</b> (${ago(ageMin)})`,
+    `<span class="state f-${cadence}" title="Green at 75% of the target or more, amber at 33%, red below.">`
+      + `<span class="dot"></span><b>${runs24}</b>&nbsp;of ${expected24} runs in the last 24 h</span>`,
+    `Target: <b>${every}</b>`,
+    `<b>${m.runs_total}</b> runs recorded`,
+    `<a href="${esc(m.workflow_url)}">Workflow runs ↗</a>`,
+  ].map((s) => `<span>${s}</span>`).join("");
+
+  if (stale) {
+    $("#banner").innerHTML = `<div class="banner"><b>Monitoring has stopped.</b> The last check was
+      ${ago(ageMin)}. Check the cron-job.org job and its token, and whether
+      <a href="${esc(m.workflow_url)}">tracker-check</a> is still enabled in the Actions tab (GitHub disables
+      schedules after 60 days of no activity). Figures below are as of the last successful run.</div>`;
+  }
+
+  const repos = Object.values((summary.activity && summary.activity.repos) || {});
+  const pushed30 = repos.filter((s) => ["active", "recent"].includes(freshness(s.pushed_at))).length;
+  $("#tiles").innerHTML = [
+    ["n", summary.resource_count, "resources monitored", null],
+    ["up", t.up, "up", "var(--good)"],
+    ["challenged", t.challenged, "challenged (bot check)", "var(--warning)"],
+    ["down", t.down, "down", "var(--critical)"],
+    ["repos", `${pushed30}/${repos.length}`, "repos pushed in 30 days", null],
+  ].map(([, n, label, color]) => `<div class="tile"><div class="n">${n}</div>
+    <div class="l">${color ? `<span class="dot" style="background:${color}"></span>` : ""}${label}</div></div>`).join("");
+
+  const att = summary.resources.filter((r) => r.state === "down" || r.url_review)
+    .sort((a, b) => (a.since || "").localeCompare(b.since || ""));
+  if (att.length) {
+    $("#attention-panel").hidden = false;
+    $("#attention-note").textContent =
+      `${att.length} resource${att.length === 1 ? "" : "s"} need attention. "check URL" means the listed `
+      + `address returns 404/410, so the resource has moved or been retired — it counts as down until the URL is fixed.`;
+    $("#attention").innerHTML = att.map((r) => `<tr>
+      <td class="name"><a href="${esc(r.url)}" rel="noopener">${esc(r.name)}</a>${r.url_review ? '<span class="flag">check URL</span>' : ""}</td>
+      <td>${stateCell(r)}</td>
+      <td><code>${esc(r.reason || "—")}</code></td>
+      <td class="node hide-sm">${esc(r.since || "—")}</td>
+      <td class="num">${pct(r.windows["30d"].uptime)}</td>
+    </tr>`).join("");
+  }
+
+  const states = [...new Set(summary.resources.map((r) => r.state))].sort();
+  $("#f-state").innerHTML += states.map((s) => `<option value="${esc(s)}">${STATES[s] || esc(s)}</option>`).join("");
+
+  $("#foot").innerHTML = `Generated <b>${esc(summary.generated)}</b> and rebuilt after every check ·
+    <a href="${REPO_URL}/blob/tracker-data/STATUS.md">STATUS.md</a> ·
+    <a href="summary.json">summary.json</a> ·
+    <a href="${REPO_URL}/tree/main/tracker">code &amp; definitions</a>.
+    Uptime = (up + challenged) ÷ recorded checks. Checks run from GitHub-hosted runners, one vantage point.`;
+
+  renderActivity(summary.activity);
+  render();
+}
+
+for (const el of [$("#q"), $("#f-state")]) el.addEventListener("input", render);
+document.querySelectorAll("th[data-sort]").forEach((th) => {
+  th.tabIndex = 0;
+  const go = () => {
+    const k = th.dataset.sort;
+    sortDir = sortKey === k ? -sortDir : (k === "name" ? 1 : -1);
+    sortKey = k;
+    document.querySelectorAll("th[data-sort]").forEach((o) => o.removeAttribute("aria-sort"));
+    th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending");
+    render();
+  };
+  th.addEventListener("click", go);
+  th.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+});
+
+document.addEventListener("mouseover", (e) => {
+  const t = e.target.closest("[data-t]");
+  if (!t) return;
+  tip.textContent = t.dataset.t;
+  const r = t.getBoundingClientRect();
+  tip.style.opacity = 1;
+  tip.style.left = Math.min(Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2), innerWidth - tip.offsetWidth - 8) + "px";
+  tip.style.top = (r.top > 46 ? r.top - tip.offsetHeight - 8 : r.bottom + 8) + "px";
+});
+document.addEventListener("mouseout", (e) => { if (e.target.closest("[data-t]")) tip.style.opacity = 0; });
+
+$("#theme").addEventListener("click", () => {
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const cur = document.documentElement.dataset.theme || (dark ? "dark" : "light");
+  document.documentElement.dataset.theme = cur === "dark" ? "light" : "dark";
+});
+
+Promise.all([
+  fetch("summary.json", { cache: "no-store" }).then((r) => r.json()),
+  fetch("history.json", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
+]).then(([s, h]) => boot(s, h)).catch((err) => {
+  $("#health").className = "pill stale";
+  $("#health-text").textContent = "Could not load results";
+  $("#banner").innerHTML = `<div class="banner"><b>Could not load summary.json.</b>
+    ${esc(err.message)} — see <a href="${REPO_URL}/blob/tracker-data/STATUS.md">STATUS.md</a>.</div>`;
+});
+</script>
+</body>
+</html>

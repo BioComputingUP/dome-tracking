@@ -1,0 +1,408 @@
+{
+ "generated": "2026-09-25T23:58:31Z",
+ "interval_minutes": 20,
+ "monitoring": {
+  "last_run": "2026-09-25T23:58:28Z",
+  "minutes_since_last_run": 0,
+  "runs_total": 12,
+  "runs_last_24h": 12,
+  "expected_runs_24h": 72,
+  "recent_runs": [
+   "2026-09-25T17:13:05Z",
+   "2026-09-25T17:13:37Z",
+   "2026-09-25T17:15:28Z",
+   "2026-09-25T17:35:40Z",
+   "2026-09-25T17:36:19Z",
+   "2026-09-25T17:37:06Z",
+   "2026-09-25T20:33:15Z",
+   "2026-09-25T20:43:48Z",
+   "2026-09-25T20:46:36Z",
+   "2026-09-25T21:29:31Z",
+   "2026-09-25T23:38:42Z",
+   "2026-09-25T23:58:28Z"
+  ],
+  "interval_minutes": 20,
+  "stale_after_minutes": 180,
+  "stale": false,
+  "status": "ACTIVE",
+  "workflow_url": "https://github.com/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml"
+ },
+ "runs_total": 12,
+ "last_run": "2026-09-25T23:58:28Z",
+ "resource_count": 5,
+ "target": 0.99,
+ "dashboard_url": "https://biocomputingup.github.io/dome-tracking/",
+ "totals": {
+  "up": 5,
+  "challenged": 0,
+  "down": 0,
+  "unknown": 0,
+  "url_review": 0,
+  "resources": 5
+ },
+ "resources": [
+  {
+   "id": "dome-registry",
+   "name": "DOME Registry",
+   "url": "https://registry.dome-ml.org",
+   "repo": "BioComputingUP/dome-registry",
+   "state": "up",
+   "since": "2026-09-25T17:13:05Z",
+   "reason": "ok",
+   "code": 200,
+   "error": null,
+   "first_seen": "2026-09-25T17:13:05Z",
+   "last_checked": "2026-09-25T23:58:29Z",
+   "final_url": "https://registry.dome-ml.org/",
+   "url_review": false,
+   "tls_warning": null,
+   "windows": {
+    "today": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "7d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "30d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "90d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "365d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    }
+   },
+   "latency_30d": {
+    "p50": "≤1000 ms",
+    "p95": "≤1000 ms",
+    "mean_ms": 716
+   }
+  },
+  {
+   "id": "dome-ml",
+   "name": "DOME-ML website",
+   "url": "https://dome-ml.org",
+   "repo": "BioComputingUP/dome-ml-ui",
+   "state": "up",
+   "since": "2026-09-25T17:13:05Z",
+   "reason": "ok",
+   "code": 200,
+   "error": null,
+   "first_seen": "2026-09-25T17:13:05Z",
+   "last_checked": "2026-09-25T23:58:29Z",
+   "final_url": "https://dome-ml.org/",
+   "url_review": false,
+   "tls_warning": null,
+   "windows": {
+    "today": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "7d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "30d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "90d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "365d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    }
+   },
+   "latency_30d": {
+    "p50": "≤1000 ms",
+    "p95": "≤2000 ms",
+    "mean_ms": 716
+   }
+  },
+  {
+   "id": "dome-copilot",
+   "name": "DOME Copilot",
+   "url": "https://dome-copilot.ifca.es/",
+   "repo": "IFCA-Advanced-Computing/dome-copilot",
+   "state": "up",
+   "since": "2026-09-25T17:13:05Z",
+   "reason": "ok",
+   "code": 200,
+   "error": null,
+   "first_seen": "2026-09-25T17:13:05Z",
+   "last_checked": "2026-09-25T23:58:29Z",
+   "final_url": "https://dome-copilot.ifca.es/",
+   "url_review": false,
+   "tls_warning": "HTTPSConnectionPool(host='dome-copilot.ifca.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed",
+   "windows": {
+    "today": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "7d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "30d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "90d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "365d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    }
+   },
+   "latency_30d": {
+    "p50": "≤1000 ms",
+    "p95": "≤1000 ms",
+    "mean_ms": 622
+   }
+  },
+  {
+   "id": "osai",
+   "name": "OSAI",
+   "url": "https://osai.dome-ml.org",
+   "repo": "BioComputingUP/dome-ml-osai-ui",
+   "state": "up",
+   "since": "2026-09-25T17:13:05Z",
+   "reason": "ok",
+   "code": 200,
+   "error": null,
+   "first_seen": "2026-09-25T17:13:05Z",
+   "last_checked": "2026-09-25T23:58:29Z",
+   "final_url": "https://osai.dome-ml.org/",
+   "url_review": false,
+   "tls_warning": null,
+   "windows": {
+    "today": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "7d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "30d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "90d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "365d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    }
+   },
+   "latency_30d": {
+    "p50": "≤1000 ms",
+    "p95": "≤2000 ms",
+    "mean_ms": 724
+   }
+  },
+  {
+   "id": "dome-observatory",
+   "name": "DOME Observatory",
+   "url": "https://observatory.dome-ml.org",
+   "repo": "BioComputingUP/dome-ml-observatory",
+   "state": "up",
+   "since": "2026-09-25T17:13:05Z",
+   "reason": "http_403",
+   "code": 403,
+   "error": null,
+   "first_seen": "2026-09-25T17:13:05Z",
+   "last_checked": "2026-09-25T23:58:29Z",
+   "final_url": "https://observatory.dome-ml.org/",
+   "url_review": false,
+   "tls_warning": null,
+   "windows": {
+    "today": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "7d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "30d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "90d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    },
+    "365d": {
+     "uptime": 1.0,
+     "coverage": 1.0,
+     "checks": 12,
+     "down": 0,
+     "challenged": 0
+    }
+   },
+   "latency_30d": {
+    "p50": "≤1000 ms",
+    "p95": "≤1000 ms",
+    "mean_ms": 673
+   }
+  }
+ ],
+ "activity": {
+  "generated": "2026-09-25T23:58:29Z",
+  "repos": {
+   "dome-registry": {
+    "name": "DOME Registry",
+    "repo": "BioComputingUP/dome-registry",
+    "html_url": "https://github.com/BioComputingUP/dome-registry",
+    "default_branch": "main",
+    "pushed_at": "2026-07-29T13:14:04Z",
+    "archived": false,
+    "last_commit": {
+     "sha": "4978003db56b9a36bc078689ceb4bf51679be708",
+     "date": "2026-07-29T13:13:58Z",
+     "author": "abdelghaniomar",
+     "message": "Add dome 2.0 schema + Logo modification",
+     "url": "https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708"
+    },
+    "error": null,
+    "fetched_at": "2026-09-25T23:58:29Z",
+    "freshness": "quiet"
+   },
+   "dome-ml": {
+    "name": "DOME-ML website",
+    "repo": "BioComputingUP/dome-ml-ui",
+    "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
+    "fetched_at": "2026-09-25T23:58:29Z",
+    "freshness": "unknown"
+   },
+   "dome-copilot": {
+    "name": "DOME Copilot",
+    "repo": "IFCA-Advanced-Computing/dome-copilot",
+    "html_url": "https://github.com/IFCA-Advanced-Computing/dome-copilot",
+    "default_branch": "master",
+    "pushed_at": "2026-03-30T11:32:42Z",
+    "archived": false,
+    "last_commit": {
+     "sha": "e157c7b56b2ef326dd9b3523b270591ba65a3542",
+     "date": "2026-03-30T11:32:41Z",
+     "author": "Ignacio Heredia",
+     "message": "feat: make the model names configurable",
+     "url": "https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542"
+    },
+    "error": null,
+    "fetched_at": "2026-09-25T23:58:29Z",
+    "freshness": "quiet"
+   },
+   "osai": {
+    "name": "OSAI",
+    "repo": "BioComputingUP/dome-ml-osai-ui",
+    "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
+    "fetched_at": "2026-09-25T23:58:29Z",
+    "freshness": "unknown"
+   },
+   "dome-observatory": {
+    "name": "DOME Observatory",
+    "repo": "BioComputingUP/dome-ml-observatory",
+    "html_url": "https://github.com/BioComputingUP/dome-ml-observatory",
+    "default_branch": "main",
+    "pushed_at": "2026-09-25T23:27:12Z",
+    "archived": false,
+    "last_commit": {
+     "sha": "ce95457e896feee481f6f7d3e6920f5bbd144b10",
+     "date": "2026-09-25T23:27:10Z",
+     "author": "gavinfarrell",
+     "message": "Drop the Hugging Face and Kaggle cards from planned integrations",
+     "url": "https://github.com/BioComputingUP/dome-ml-observatory/commit/ce95457e896feee481f6f7d3e6920f5bbd144b10"
+    },
+    "error": null,
+    "fetched_at": "2026-09-25T23:58:29Z",
+    "freshness": "active"
+   }
+  }
+ }
+}

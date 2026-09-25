@@ -1,0 +1,68 @@
+{
+ "generated": "2026-09-25T23:58:29Z",
+ "repos": {
+  "dome-registry": {
+   "repo": "BioComputingUP/dome-registry",
+   "html_url": "https://github.com/BioComputingUP/dome-registry",
+   "default_branch": "main",
+   "pushed_at": "2026-07-29T13:14:04Z",
+   "archived": false,
+   "last_commit": {
+    "sha": "4978003db56b9a36bc078689ceb4bf51679be708",
+    "date": "2026-07-29T13:13:58Z",
+    "author": "abdelghaniomar",
+    "message": "Add dome 2.0 schema + Logo modification",
+    "url": "https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708"
+   },
+   "error": null,
+   "fetched_at": "2026-09-25T23:58:29Z",
+   "freshness": "quiet"
+  },
+  "dome-ml": {
+   "repo": "BioComputingUP/dome-ml-ui",
+   "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
+   "fetched_at": "2026-09-25T23:58:29Z",
+   "freshness": "unknown"
+  },
+  "dome-copilot": {
+   "repo": "IFCA-Advanced-Computing/dome-copilot",
+   "html_url": "https://github.com/IFCA-Advanced-Computing/dome-copilot",
+   "default_branch": "master",
+   "pushed_at": "2026-03-30T11:32:42Z",
+   "archived": false,
+   "last_commit": {
+    "sha": "e157c7b56b2ef326dd9b3523b270591ba65a3542",
+    "date": "2026-03-30T11:32:41Z",
+    "author": "Ignacio Heredia",
+    "message": "feat: make the model names configurable",
+    "url": "https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542"
+   },
+   "error": null,
+   "fetched_at": "2026-09-25T23:58:29Z",
+   "freshness": "quiet"
+  },
+  "osai": {
+   "repo": "BioComputingUP/dome-ml-osai-ui",
+   "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
+   "fetched_at": "2026-09-25T23:58:29Z",
+   "freshness": "unknown"
+  },
+  "dome-observatory": {
+   "repo": "BioComputingUP/dome-ml-observatory",
+   "html_url": "https://github.com/BioComputingUP/dome-ml-observatory",
+   "default_branch": "main",
+   "pushed_at": "2026-09-25T23:27:12Z",
+   "archived": false,
+   "last_commit": {
+    "sha": "ce95457e896feee481f6f7d3e6920f5bbd144b10",
+    "date": "2026-09-25T23:27:10Z",
+    "author": "gavinfarrell",
+    "message": "Drop the Hugging Face and Kaggle cards from planned integrations",
+    "url": "https://github.com/BioComputingUP/dome-ml-observatory/commit/ce95457e896feee481f6f7d3e6920f5bbd144b10"
+   },
+   "error": null,
+   "fetched_at": "2026-09-25T23:58:29Z",
+   "freshness": "active"
+  }
+ }
+}
