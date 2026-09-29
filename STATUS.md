@@ -7,9 +7,9 @@
 | | |
 |---|---|
 | **Resources monitored** | 5 — every one, every 20 minutes, continuously |
-| **Last check** | 2026-09-28T22:09:24Z (0 min ago) |
-| **Runs in the last 24 h** | 16 of a target 72 |
-| **Checks recorded** | 71 runs since monitoring began |
+| **Last check** | 2026-09-29T23:14:19Z (0 min ago) |
+| **Runs in the last 24 h** | 18 of a target 72 |
+| **Checks recorded** | 89 runs since monitoring began |
 | **Runs on** | [GitHub Actions → tracker-check](https://github.com/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml) |
 | **Visual dashboard** | https://biocomputingup.github.io/dome-tracking/ |
 
@@ -27,11 +27,11 @@ Uptime = (up + challenged) ÷ recorded checks. Coverage = recorded ÷ expected c
 
 | Resource | Repository | Last push | Activity | Head commit |
 |---|---|---|---|---|
-| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (61 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
+| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (62 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
 | DOME-ML website | [BioComputingUP/dome-ml-ui](https://github.com/BioComputingUP/dome-ml-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (182 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
+| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (183 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
 | OSAI | [BioComputingUP/dome-ml-osai-ui](https://github.com/BioComputingUP/dome-ml-osai-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-09-28T19:09:28Z (3 h ago) | 🟢 active (<7 d) | [`6f39dd6`](https://github.com/BioComputingUP/dome-ml-observatory/commit/6f39dd6bd893b80715f3905b3796067cb43b815c) Send a starship off Ivan's card on one click, and retire the hologram skin — gavinfarrell, 2026-09-28 |
+| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-09-28T19:09:28Z (28 h ago) | 🟢 active (<7 d) | [`6f39dd6`](https://github.com/BioComputingUP/dome-ml-observatory/commit/6f39dd6bd893b80715f3905b3796067cb43b815c) Send a starship off Ivan's card on one click, and retire the hologram skin — gavinfarrell, 2026-09-28 |
 
 ---
 
@@ -51,10 +51,10 @@ None.
 
 | Resource | 30d uptime | 30d coverage | Down checks |
 |---|---|---|---|
-| [DOME Registry](https://registry.dome-ml.org) | 95.77% | 32.57% | 3 |
-| [DOME-ML website](https://dome-ml.org) | 95.77% | 32.57% | 3 |
-| [OSAI](https://osai.dome-ml.org) | 95.77% | 32.57% | 3 |
-| [DOME Observatory](https://observatory.dome-ml.org) | 95.77% | 32.57% | 3 |
+| [DOME Registry](https://registry.dome-ml.org) | 96.63% | 30.38% | 3 |
+| [DOME-ML website](https://dome-ml.org) | 96.63% | 30.38% | 3 |
+| [OSAI](https://osai.dome-ml.org) | 96.63% | 30.38% | 3 |
+| [DOME Observatory](https://observatory.dome-ml.org) | 96.63% | 30.38% | 3 |
 
 ---
 
@@ -64,11 +64,11 @@ All 5 resources, sorted by name. Sortable and searchable on the [dashboard](http
 
 | Resource | State | Today | 7d | 30d | 90d | 365d | Coverage 30d | p95 30d |
 |---|---|---|---|---|---|---|---|---|
-| [DOME Copilot](https://dome-copilot.ifca.es/) | 🟢 up ⚠️ TLS | 100.00% | 100.00% | 100.00% | 100.00% | 100.00% | 32.57% | ≤1000 ms |
-| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 95.77% | 95.77% | 95.77% | 95.77% | 32.57% | ≤2000 ms |
-| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 95.77% | 95.77% | 95.77% | 95.77% | 32.57% | ≤2000 ms |
-| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 95.77% | 95.77% | 95.77% | 95.77% | 32.57% | ≤2000 ms |
-| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 95.77% | 95.77% | 95.77% | 95.77% | 32.57% | ≤2000 ms |
+| [DOME Copilot](https://dome-copilot.ifca.es/) | 🟢 up ⚠️ TLS | 100.00% | 100.00% | 100.00% | 100.00% | 100.00% | 30.38% | ≤1000 ms |
+| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 96.63% | 96.63% | 96.63% | 96.63% | 30.38% | ≤2000 ms |
+| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 96.63% | 96.63% | 96.63% | 96.63% | 30.38% | ≤2000 ms |
+| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 96.63% | 96.63% | 96.63% | 96.63% | 30.38% | ≤2000 ms |
+| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 96.63% | 96.63% | 96.63% | 96.63% | 30.38% | ≤2000 ms |
 
 ---
 
@@ -102,4 +102,4 @@ The newest entries from `events.jsonl`, the full audit trail of every state chan
 
 ---
 
-Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-09-28T22:09:27Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).
+Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-09-29T23:14:24Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).
