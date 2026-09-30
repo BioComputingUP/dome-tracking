@@ -19,3 +19,11 @@
 {"ts": "2026-09-27T17:49:34Z", "id": "dome-ml", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-09-27T17:49:34Z", "id": "osai", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-09-27T17:49:34Z", "id": "dome-observatory", "event": "state_change", "from": "down", "to": "up", "code": 403, "reason": "http_403", "error": null}
+{"ts": "2026-09-30T08:58:35Z", "id": "dome-registry", "event": "state_change", "from": "up", "to": "down", "code": null, "reason": "read_timeout", "error": "HTTPSConnectionPool(host='registry.dome-ml.org', port=443): Read timed out. (read timeout=10)"}
+{"ts": "2026-09-30T08:58:35Z", "id": "dome-ml", "event": "state_change", "from": "up", "to": "down", "code": null, "reason": "read_timeout", "error": "HTTPSConnectionPool(host='dome-ml.org', port=443): Read timed out. (read timeout=10)"}
+{"ts": "2026-09-30T08:58:35Z", "id": "osai", "event": "state_change", "from": "up", "to": "down", "code": null, "reason": "read_timeout", "error": "HTTPSConnectionPool(host='osai.dome-ml.org', port=443): Read timed out. (read timeout=10)"}
+{"ts": "2026-09-30T08:58:35Z", "id": "dome-observatory", "event": "state_change", "from": "up", "to": "down", "code": null, "reason": "read_timeout", "error": "HTTPSConnectionPool(host='observatory.dome-ml.org', port=443): Read timed out. (read timeout=10)"}
+{"ts": "2026-09-30T13:36:09Z", "id": "dome-registry", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-30T13:36:09Z", "id": "dome-ml", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-30T13:36:09Z", "id": "osai", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-09-30T13:36:09Z", "id": "dome-observatory", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
