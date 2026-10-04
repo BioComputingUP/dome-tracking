@@ -1,0 +1,89 @@
+{
+ "date": "2026-10-04",
+ "interval_minutes": 20,
+ "runs": 1,
+ "first_run": "2026-10-04T00:31:05Z",
+ "last_run": "2026-10-04T00:31:05Z",
+ "resources": {
+  "dome-registry": {
+   "checks": 1,
+   "up": 1,
+   "challenged": 0,
+   "down": 0,
+   "latency_sum_ms": 942,
+   "latency_hist": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "dome-ml": {
+   "checks": 1,
+   "up": 1,
+   "challenged": 0,
+   "down": 0,
+   "latency_sum_ms": 630,
+   "latency_hist": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "dome-copilot": {
+   "checks": 1,
+   "up": 1,
+   "challenged": 0,
+   "down": 0,
+   "latency_sum_ms": 761,
+   "latency_hist": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "osai": {
+   "checks": 1,
+   "up": 1,
+   "challenged": 0,
+   "down": 0,
+   "latency_sum_ms": 876,
+   "latency_hist": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "dome-observatory": {
+   "checks": 1,
+   "up": 1,
+   "challenged": 0,
+   "down": 0,
+   "latency_sum_ms": 939,
+   "latency_hist": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ }
+}
