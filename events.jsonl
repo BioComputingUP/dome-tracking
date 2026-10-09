@@ -27,3 +27,5 @@
 {"ts": "2026-09-30T13:36:09Z", "id": "dome-ml", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-09-30T13:36:09Z", "id": "osai", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-09-30T13:36:09Z", "id": "dome-observatory", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-10-09T09:17:47Z", "id": "osai", "event": "state_change", "from": "up", "to": "down", "code": null, "reason": "read_timeout", "error": "HTTPSConnectionPool(host='osai.dome-ml.org', port=443): Read timed out. (read timeout=10)"}
+{"ts": "2026-10-09T09:35:09Z", "id": "osai", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
