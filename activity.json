@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-09T21:13:01Z",
+ "generated": "2026-10-10T18:42:46Z",
  "repos": {
   "dome-registry": {
    "repo": "BioComputingUP/dome-registry",
@@ -15,13 +15,13 @@
     "url": "https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708"
    },
    "error": null,
-   "fetched_at": "2026-10-09T21:13:01Z",
+   "fetched_at": "2026-10-10T18:42:46Z",
    "freshness": "quiet"
   },
   "dome-ml": {
    "repo": "BioComputingUP/dome-ml-ui",
    "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
-   "fetched_at": "2026-10-09T21:13:01Z",
+   "fetched_at": "2026-10-10T18:42:46Z",
    "freshness": "unknown"
   },
   "dome-copilot": {
@@ -38,13 +38,13 @@
     "url": "https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542"
    },
    "error": null,
-   "fetched_at": "2026-10-09T21:13:01Z",
+   "fetched_at": "2026-10-10T18:42:46Z",
    "freshness": "quiet"
   },
   "osai": {
    "repo": "BioComputingUP/dome-ml-osai-ui",
    "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
-   "fetched_at": "2026-10-09T21:13:01Z",
+   "fetched_at": "2026-10-10T18:42:46Z",
    "freshness": "unknown"
   },
   "dome-observatory": {
@@ -61,7 +61,7 @@
     "url": "https://github.com/BioComputingUP/dome-ml-observatory/commit/6f39dd6bd893b80715f3905b3796067cb43b815c"
    },
    "error": null,
-   "fetched_at": "2026-10-09T21:13:01Z",
+   "fetched_at": "2026-10-10T18:42:46Z",
    "freshness": "recent"
   }
  }
