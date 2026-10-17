@@ -1,33 +1,13 @@
 {
- "generated": "2026-10-16T23:29:23Z",
+ "generated": "2026-10-17T22:12:31Z",
  "interval_minutes": 20,
  "monitoring": {
-  "last_run": "2026-10-16T23:29:20Z",
+  "last_run": "2026-10-17T22:12:28Z",
   "minutes_since_last_run": 0,
-  "runs_total": 394,
-  "runs_last_24h": 23,
+  "runs_total": 419,
+  "runs_last_24h": 28,
   "expected_runs_24h": 72,
   "recent_runs": [
-   "2026-10-14T23:58:17Z",
-   "2026-10-15T00:49:10Z",
-   "2026-10-15T00:58:47Z",
-   "2026-10-15T01:24:12Z",
-   "2026-10-15T04:53:10Z",
-   "2026-10-15T06:22:50Z",
-   "2026-10-15T06:33:36Z",
-   "2026-10-15T07:19:44Z",
-   "2026-10-15T10:06:09Z",
-   "2026-10-15T12:02:40Z",
-   "2026-10-15T12:11:08Z",
-   "2026-10-15T13:20:21Z",
-   "2026-10-15T15:07:55Z",
-   "2026-10-15T17:19:00Z",
-   "2026-10-15T17:24:19Z",
-   "2026-10-15T18:13:18Z",
-   "2026-10-15T19:15:15Z",
-   "2026-10-15T20:30:52Z",
-   "2026-10-15T20:34:05Z",
-   "2026-10-15T22:09:44Z",
    "2026-10-15T22:28:24Z",
    "2026-10-15T23:15:00Z",
    "2026-10-15T23:20:26Z",
@@ -53,7 +33,32 @@
    "2026-10-16T21:24:05Z",
    "2026-10-16T22:59:29Z",
    "2026-10-16T23:03:52Z",
-   "2026-10-16T23:29:20Z"
+   "2026-10-16T23:29:20Z",
+   "2026-10-17T00:35:46Z",
+   "2026-10-17T01:30:25Z",
+   "2026-10-17T01:37:56Z",
+   "2026-10-17T04:13:46Z",
+   "2026-10-17T05:41:47Z",
+   "2026-10-17T06:06:50Z",
+   "2026-10-17T06:16:34Z",
+   "2026-10-17T09:12:59Z",
+   "2026-10-17T10:58:08Z",
+   "2026-10-17T11:08:20Z",
+   "2026-10-17T11:13:06Z",
+   "2026-10-17T13:38:50Z",
+   "2026-10-17T14:16:56Z",
+   "2026-10-17T14:23:25Z",
+   "2026-10-17T14:28:18Z",
+   "2026-10-17T17:02:39Z",
+   "2026-10-17T17:20:04Z",
+   "2026-10-17T17:31:06Z",
+   "2026-10-17T17:34:04Z",
+   "2026-10-17T19:16:36Z",
+   "2026-10-17T19:32:16Z",
+   "2026-10-17T19:41:51Z",
+   "2026-10-17T19:43:55Z",
+   "2026-10-17T21:47:28Z",
+   "2026-10-17T22:12:28Z"
   ],
   "interval_minutes": 20,
   "stale_after_minutes": 180,
@@ -61,8 +66,8 @@
   "status": "ACTIVE",
   "workflow_url": "https://github.com/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml"
  },
- "runs_total": 394,
- "last_run": "2026-10-16T23:29:20Z",
+ "runs_total": 419,
+ "last_run": "2026-10-17T22:12:28Z",
  "resource_count": 5,
  "target": 0.99,
  "dashboard_url": "https://biocomputingup.github.io/dome-tracking/",
@@ -86,43 +91,43 @@
    "code": 200,
    "error": null,
    "first_seen": "2026-09-25T17:13:05Z",
-   "last_checked": "2026-10-16T23:29:21Z",
+   "last_checked": "2026-10-17T22:12:28Z",
    "final_url": "https://registry.dome-ml.org/",
    "url_review": false,
    "tls_warning": null,
    "windows": {
     "today": {
-     "uptime": 0.9130434782608695,
-     "coverage": 0.323943661971831,
-     "checks": 23,
-     "down": 2,
+     "uptime": 1.0,
+     "coverage": 0.373134328358209,
+     "checks": 25,
+     "down": 0,
      "challenged": 0
     },
     "7d": {
-     "uptime": 0.9849624060150376,
-     "coverage": 0.2644135188866799,
-     "checks": 133,
+     "uptime": 0.9855072463768116,
+     "coverage": 0.27655310621242485,
+     "checks": 138,
      "down": 2,
      "challenged": 0
     },
     "30d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "90d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "365d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     }
@@ -130,7 +135,7 @@
    "latency_30d": {
     "p50": "≤1000 ms",
     "p95": "≤2000 ms",
-    "mean_ms": 970
+    "mean_ms": 971
    }
   },
   {
@@ -144,43 +149,43 @@
    "code": 200,
    "error": null,
    "first_seen": "2026-09-25T17:13:05Z",
-   "last_checked": "2026-10-16T23:29:21Z",
+   "last_checked": "2026-10-17T22:12:28Z",
    "final_url": "https://dome-ml.org/",
    "url_review": false,
    "tls_warning": null,
    "windows": {
     "today": {
-     "uptime": 0.9130434782608695,
-     "coverage": 0.323943661971831,
-     "checks": 23,
-     "down": 2,
+     "uptime": 1.0,
+     "coverage": 0.373134328358209,
+     "checks": 25,
+     "down": 0,
      "challenged": 0
     },
     "7d": {
-     "uptime": 0.9849624060150376,
-     "coverage": 0.2644135188866799,
-     "checks": 133,
+     "uptime": 0.9855072463768116,
+     "coverage": 0.27655310621242485,
+     "checks": 138,
      "down": 2,
      "challenged": 0
     },
     "30d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "90d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "365d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     }
@@ -188,7 +193,7 @@
    "latency_30d": {
     "p50": "≤1000 ms",
     "p95": "≤2000 ms",
-    "mean_ms": 967
+    "mean_ms": 975
    }
   },
   {
@@ -202,43 +207,43 @@
    "code": 200,
    "error": null,
    "first_seen": "2026-09-25T17:13:05Z",
-   "last_checked": "2026-10-16T23:29:21Z",
+   "last_checked": "2026-10-17T22:12:29Z",
    "final_url": "https://dome-copilot.ifca.es/",
    "url_review": false,
    "tls_warning": "HTTPSConnectionPool(host='dome-copilot.ifca.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed",
    "windows": {
     "today": {
      "uptime": 1.0,
-     "coverage": 0.323943661971831,
-     "checks": 23,
+     "coverage": 0.373134328358209,
+     "checks": 25,
      "down": 0,
      "challenged": 0
     },
     "7d": {
-     "uptime": 0.9924812030075187,
-     "coverage": 0.2644135188866799,
-     "checks": 133,
+     "uptime": 0.9927536231884058,
+     "coverage": 0.27655310621242485,
+     "checks": 138,
      "down": 1,
      "challenged": 0
     },
     "30d": {
-     "uptime": 0.9974619289340102,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9976133651551312,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 1,
      "challenged": 0
     },
     "90d": {
-     "uptime": 0.9974619289340102,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9976133651551312,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 1,
      "challenged": 0
     },
     "365d": {
-     "uptime": 0.9974619289340102,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9976133651551312,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 1,
      "challenged": 0
     }
@@ -246,7 +251,7 @@
    "latency_30d": {
     "p50": "≤1000 ms",
     "p95": "≤1000 ms",
-    "mean_ms": 632
+    "mean_ms": 631
    }
   },
   {
@@ -260,43 +265,43 @@
    "code": 200,
    "error": null,
    "first_seen": "2026-09-25T17:13:05Z",
-   "last_checked": "2026-10-16T23:29:21Z",
+   "last_checked": "2026-10-17T22:12:28Z",
    "final_url": "https://osai.dome-ml.org/",
    "url_review": false,
    "tls_warning": null,
    "windows": {
     "today": {
-     "uptime": 0.9130434782608695,
-     "coverage": 0.323943661971831,
-     "checks": 23,
-     "down": 2,
+     "uptime": 1.0,
+     "coverage": 0.373134328358209,
+     "checks": 25,
+     "down": 0,
      "challenged": 0
     },
     "7d": {
-     "uptime": 0.9849624060150376,
-     "coverage": 0.2644135188866799,
-     "checks": 133,
+     "uptime": 0.9855072463768116,
+     "coverage": 0.27655310621242485,
+     "checks": 138,
      "down": 2,
      "challenged": 0
     },
     "30d": {
-     "uptime": 0.9796954314720813,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9809069212410502,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 8,
      "challenged": 0
     },
     "90d": {
-     "uptime": 0.9796954314720813,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9809069212410502,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 8,
      "challenged": 0
     },
     "365d": {
-     "uptime": 0.9796954314720813,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9809069212410502,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 8,
      "challenged": 0
     }
@@ -304,7 +309,7 @@
    "latency_30d": {
     "p50": "≤1000 ms",
     "p95": "≤2000 ms",
-    "mean_ms": 925
+    "mean_ms": 931
    }
   },
   {
@@ -318,43 +323,43 @@
    "code": 200,
    "error": null,
    "first_seen": "2026-09-25T17:13:05Z",
-   "last_checked": "2026-10-16T23:29:21Z",
+   "last_checked": "2026-10-17T22:12:28Z",
    "final_url": "https://observatory.dome-ml.org/",
    "url_review": false,
    "tls_warning": null,
    "windows": {
     "today": {
-     "uptime": 0.9130434782608695,
-     "coverage": 0.323943661971831,
-     "checks": 23,
-     "down": 2,
+     "uptime": 1.0,
+     "coverage": 0.373134328358209,
+     "checks": 25,
+     "down": 0,
      "challenged": 0
     },
     "7d": {
-     "uptime": 0.9849624060150376,
-     "coverage": 0.2644135188866799,
-     "checks": 133,
+     "uptime": 0.9855072463768116,
+     "coverage": 0.27655310621242485,
+     "checks": 138,
      "down": 2,
      "challenged": 0
     },
     "30d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "90d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     },
     "365d": {
-     "uptime": 0.9822335025380711,
-     "coverage": 0.2595520421607378,
-     "checks": 394,
+     "uptime": 0.9832935560859188,
+     "coverage": 0.26418663303909207,
+     "checks": 419,
      "down": 7,
      "challenged": 0
     }
@@ -362,12 +367,12 @@
    "latency_30d": {
     "p50": "≤1000 ms",
     "p95": "≤2000 ms",
-    "mean_ms": 950
+    "mean_ms": 967
    }
   }
  ],
  "activity": {
-  "generated": "2026-10-16T23:29:21Z",
+  "generated": "2026-10-17T22:12:29Z",
   "repos": {
    "dome-registry": {
     "name": "DOME Registry",
@@ -384,14 +389,14 @@
      "url": "https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708"
     },
     "error": null,
-    "fetched_at": "2026-10-16T23:29:21Z",
+    "fetched_at": "2026-10-17T22:12:29Z",
     "freshness": "quiet"
    },
    "dome-ml": {
     "name": "DOME-ML website",
     "repo": "BioComputingUP/dome-ml-ui",
     "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
-    "fetched_at": "2026-10-16T23:29:21Z",
+    "fetched_at": "2026-10-17T22:12:29Z",
     "freshness": "unknown"
    },
    "dome-copilot": {
@@ -409,14 +414,14 @@
      "url": "https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542"
     },
     "error": null,
-    "fetched_at": "2026-10-16T23:29:21Z",
+    "fetched_at": "2026-10-17T22:12:29Z",
     "freshness": "quiet"
    },
    "osai": {
     "name": "OSAI",
     "repo": "BioComputingUP/dome-ml-osai-ui",
     "error": "404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret)",
-    "fetched_at": "2026-10-16T23:29:21Z",
+    "fetched_at": "2026-10-17T22:12:29Z",
     "freshness": "unknown"
    },
    "dome-observatory": {
@@ -434,7 +439,7 @@
      "url": "https://github.com/BioComputingUP/dome-ml-observatory/commit/6f39dd6bd893b80715f3905b3796067cb43b815c"
     },
     "error": null,
-    "fetched_at": "2026-10-16T23:29:21Z",
+    "fetched_at": "2026-10-17T22:12:29Z",
     "freshness": "recent"
    }
   }
