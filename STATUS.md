@@ -7,15 +7,15 @@
 | | |
 |---|---|
 | **Resources monitored** | 5 — every one, every 20 minutes, continuously |
-| **Last check** | 2026-11-08T23:48:44Z (0 min ago) |
-| **Runs in the last 24 h** | 18 of a target 72 |
-| **Checks recorded** | 831 runs since monitoring began |
+| **Last check** | 2026-11-09T19:06:56Z (1 min ago) |
+| **Runs in the last 24 h** | 16 of a target 72 |
+| **Checks recorded** | 841 runs since monitoring began |
 | **Runs on** | [GitHub Actions → tracker-check](https://github.com/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml) |
 | **Visual dashboard** | https://biocomputingup.github.io/dome-tracking/ |
 
 ### Right now
 
-🟢 up **5** · 🟡 challenged **0** · 🔴 down **0** · ⚪ never checked **0** · 🔗 check URL to review **0**
+🟢 up **4** · 🟡 challenged **0** · 🔴 down **1** · ⚪ never checked **0** · 🔗 check URL to review **0**
 
 Uptime = (up + challenged) ÷ recorded checks. Coverage = recorded ÷ expected checks. 99.00% is a reference line only; it sorts the list below. Full definitions: [tracker/README.md](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/README.md).
 
@@ -27,11 +27,11 @@ Uptime = (up + challenged) ÷ recorded checks. Coverage = recorded ÷ expected c
 
 | Resource | Repository | Last push | Activity | Head commit |
 |---|---|---|---|---|
-| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (102 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
+| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (103 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
 | DOME-ML website | [BioComputingUP/dome-ml-ui](https://github.com/BioComputingUP/dome-ml-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (223 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
+| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (224 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
 | OSAI | [BioComputingUP/dome-ml-osai-ui](https://github.com/BioComputingUP/dome-ml-osai-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-10-22T15:36:34Z (17 days ago) | 🟡 recent (<30 d) | [`c749889`](https://github.com/BioComputingUP/dome-ml-observatory/commit/c749889b8f9b3cf3366c1a31e4bf7392bdbf0d14) Security: update dependencies to clear npm audit advisories — gavinfarrell, 2026-10-22 |
+| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-10-22T15:36:34Z (18 days ago) | 🟡 recent (<30 d) | [`c749889`](https://github.com/BioComputingUP/dome-ml-observatory/commit/c749889b8f9b3cf3366c1a31e4bf7392bdbf0d14) Security: update dependencies to clear npm audit advisories — gavinfarrell, 2026-10-22 |
 
 ---
 
@@ -39,7 +39,13 @@ Uptime = (up + challenged) ÷ recorded checks. Coverage = recorded ÷ expected c
 
 ### 🔴 Currently down
 
-None — every monitored resource is responding.
+**1** of 5 resources are not responding.
+
+| Resource | Since (UTC) | Reason | 30d uptime |
+|---|---|---|---|
+| [DOME Copilot](https://dome-copilot.ifca.es/) | 2026-11-09T16:05:52Z | `http_502` | 99.11% |
+
+🔗 = the check URL returns 404/410; see below.
 
 ### 🔗 Check URL needs review
 
@@ -57,11 +63,11 @@ All 5 resources, sorted by name. Sortable and searchable on the [dashboard](http
 
 | Resource | State | Today | 7d | 30d | 90d | 365d | Coverage 30d | p95 30d |
 |---|---|---|---|---|---|---|---|---|
-| [DOME Copilot](https://dome-copilot.ifca.es/) | 🟢 up ⚠️ TLS | 100.00% | 100.00% | 99.82% | 99.88% | 99.88% | 26.39% | ≤1000 ms |
-| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.65% | 99.16% | 99.16% | 26.39% | ≤2000 ms |
-| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.65% | 99.16% | 99.16% | 26.39% | ≤2000 ms |
-| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.65% | 99.16% | 99.16% | 26.39% | ≤2000 ms |
-| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.65% | 99.04% | 99.04% | 26.39% | ≤2000 ms |
+| [DOME Copilot](https://dome-copilot.ifca.es/) | 🔴 down ⚠️ TLS | 60.00% | 96.12% | 99.11% | 99.41% | 99.41% | 26.10% | ≤1000 ms |
+| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.64% | 99.17% | 99.17% | 26.10% | ≤2000 ms |
+| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.64% | 99.17% | 99.17% | 26.10% | ≤2000 ms |
+| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.64% | 99.17% | 99.17% | 26.10% | ≤2000 ms |
+| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 99.64% | 99.05% | 99.05% | 26.10% | ≤2000 ms |
 
 ---
 
@@ -71,6 +77,7 @@ The newest entries from `events.jsonl`, the full audit trail of every state chan
 
 | When (UTC) | Resource | Change | Detail |
 |---|---|---|---|
+| 2026-11-09T16:05:52Z | DOME Copilot | 🟢 up → 🔴 down | `http_502` |
 | 2026-10-16T07:03:22Z | DOME Observatory | 🔴 down → 🟢 up | `ok` |
 | 2026-10-16T07:03:22Z | OSAI | 🔴 down → 🟢 up | `ok` |
 | 2026-10-16T07:03:22Z | DOME-ML website | 🔴 down → 🟢 up | `ok` |
@@ -95,8 +102,7 @@ The newest entries from `events.jsonl`, the full audit trail of every state chan
 | 2026-09-27T17:49:34Z | OSAI | 🔴 down → 🟢 up | `ok` |
 | 2026-09-27T17:49:34Z | DOME-ML website | 🔴 down → 🟢 up | `ok` |
 | 2026-09-27T17:49:34Z | DOME Registry | 🔴 down → 🟢 up | `ok` |
-| 2026-09-27T13:52:05Z | DOME Observatory | 🟢 up → 🔴 down | `read_timeout` |
 
 ---
 
-Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-11-08T23:48:47Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).
+Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-11-09T19:07:30Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).

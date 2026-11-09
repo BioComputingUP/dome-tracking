@@ -39,3 +39,4 @@
 {"ts": "2026-10-16T07:03:22Z", "id": "dome-ml", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-10-16T07:03:22Z", "id": "osai", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
 {"ts": "2026-10-16T07:03:22Z", "id": "dome-observatory", "event": "state_change", "from": "down", "to": "up", "code": 200, "reason": "ok", "error": null}
+{"ts": "2026-11-09T16:05:52Z", "id": "dome-copilot", "event": "state_change", "from": "up", "to": "down", "code": 502, "reason": "http_502", "error": null}
