@@ -7,9 +7,9 @@
 | | |
 |---|---|
 | **Resources monitored** | 5 — every one, every 20 minutes, continuously |
-| **Last check** | 2026-11-21T23:04:37Z (0 min ago) |
+| **Last check** | 2026-11-22T23:46:56Z (0 min ago) |
 | **Runs in the last 24 h** | 15 of a target 72 |
-| **Checks recorded** | 1005 runs since monitoring began |
+| **Checks recorded** | 1020 runs since monitoring began |
 | **Runs on** | [GitHub Actions → tracker-check](https://github.com/BioComputingUP/dome-tracking/actions/workflows/tracker-check.yml) |
 | **Visual dashboard** | https://biocomputingup.github.io/dome-tracking/ |
 
@@ -27,11 +27,11 @@ Uptime = (up + challenged) ÷ recorded checks. Coverage = recorded ÷ expected c
 
 | Resource | Repository | Last push | Activity | Head commit |
 |---|---|---|---|---|
-| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (115 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
+| DOME Registry | [BioComputingUP/dome-registry](https://github.com/BioComputingUP/dome-registry) `main` | 2026-07-29T13:14:04Z (116 days ago) | 🔴 quiet (≥30 d) | [`4978003`](https://github.com/BioComputingUP/dome-registry/commit/4978003db56b9a36bc078689ceb4bf51679be708) Add dome 2.0 schema + Logo modification — abdelghaniomar, 2026-07-29 |
 | DOME-ML website | [BioComputingUP/dome-ml-ui](https://github.com/BioComputingUP/dome-ml-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (236 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
+| DOME Copilot | [IFCA-Advanced-Computing/dome-copilot](https://github.com/IFCA-Advanced-Computing/dome-copilot) `master` | 2026-03-30T11:32:42Z (237 days ago) | 🔴 quiet (≥30 d) | [`e157c7b`](https://github.com/IFCA-Advanced-Computing/dome-copilot/commit/e157c7b56b2ef326dd9b3523b270591ba65a3542) feat: make the model names configurable — Ignacio Heredia, 2026-03-30 |
 | OSAI | [BioComputingUP/dome-ml-osai-ui](https://github.com/BioComputingUP/dome-ml-osai-ui) | — (never) | ⚪ unknown ⚠️ 404: repository not found or private; the token cannot read it (set the ACTIVITY_TOKEN secret) | — |
-| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-11-20T23:52:58Z (23 h ago) | 🟢 active (<7 d) | [`e632be2`](https://github.com/BioComputingUP/dome-ml-observatory/commit/e632be2dd2e2613558093e2dc4c4992b70bc61cd) Deploy skill: read the production context from a gitignored local file; a load ends when production shows it — gavinfarrell, 2026-11-20 |
+| DOME Observatory | [BioComputingUP/dome-ml-observatory](https://github.com/BioComputingUP/dome-ml-observatory) `main` | 2026-11-20T23:52:58Z (47 h ago) | 🟢 active (<7 d) | [`e632be2`](https://github.com/BioComputingUP/dome-ml-observatory/commit/e632be2dd2e2613558093e2dc4c4992b70bc61cd) Deploy skill: read the production context from a gitignored local file; a load ends when production shows it — gavinfarrell, 2026-11-20 |
 
 ---
 
@@ -51,7 +51,7 @@ None.
 
 | Resource | 30d uptime | 30d coverage | Down checks |
 |---|---|---|---|
-| [DOME Copilot](https://dome-copilot.ifca.es/) | 96.62% | 21.96% | 16 |
+| [DOME Copilot](https://dome-copilot.ifca.es/) | 96.58% | 21.67% | 16 |
 
 ---
 
@@ -61,11 +61,11 @@ All 5 resources, sorted by name. Sortable and searchable on the [dashboard](http
 
 | Resource | State | Today | 7d | 30d | 90d | 365d | Coverage 30d | p95 30d |
 |---|---|---|---|---|---|---|---|---|
-| [DOME Copilot](https://dome-copilot.ifca.es/) | 🟢 up ⚠️ TLS | 100.00% | 100.00% | 96.62% | 98.31% | 98.31% | 21.96% | ≤1000 ms |
-| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.30% | 99.30% | 21.96% | ≤2000 ms |
-| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.30% | 99.30% | 21.96% | ≤2000 ms |
-| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.30% | 99.30% | 21.96% | ≤2000 ms |
-| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.20% | 99.20% | 21.96% | ≤2000 ms |
+| [DOME Copilot](https://dome-copilot.ifca.es/) | 🟢 up ⚠️ TLS | 100.00% | 100.00% | 96.58% | 98.33% | 98.33% | 21.67% | ≤1000 ms |
+| [DOME Observatory](https://observatory.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.31% | 99.31% | 21.67% | ≤2000 ms |
+| [DOME Registry](https://registry.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.31% | 99.31% | 21.67% | ≤2000 ms |
+| [DOME-ML website](https://dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.31% | 99.31% | 21.67% | ≤2000 ms |
+| [OSAI](https://osai.dome-ml.org) | 🟢 up | 100.00% | 100.00% | 100.00% | 99.22% | 99.22% | 21.67% | ≤2000 ms |
 
 ---
 
@@ -103,4 +103,4 @@ The newest entries from `events.jsonl`, the full audit trail of every state chan
 
 ---
 
-Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-11-21T23:04:40Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).
+Generated by [tracker/scripts/summarize.py](https://github.com/BioComputingUP/dome-tracking/blob/main/tracker/scripts/summarize.py) at **2026-11-22T23:47:00Z**, and rewritten after every check. Machine-readable: [summary.json](https://github.com/BioComputingUP/dome-tracking/blob/tracker-data/summary.json).
